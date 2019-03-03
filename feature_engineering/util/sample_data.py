@@ -2,7 +2,7 @@ from sklearn.datasets import load_iris, load_boston
 import pandas as pd
 
 
-def load_dataset(dataset="boston"):
+def load_df(dataset="boston"):
     """ Load sample dataset from sklearn as pandas DataFrame
     """
     if dataset == "boston":
@@ -17,8 +17,8 @@ def load_dataset(dataset="boston"):
 
 
 if __name__ == '__main__':
-    df = load_dataset(dataset="boston")
+    df = load_df(dataset="boston")
     print(df.head())
 
-    df = load_dataset(dataset="iris")
+    df = load_df(dataset="iris")
     print(df.head())
