@@ -30,8 +30,8 @@ def cross_generation(df, fmap):
 
 
 if __name__ == '__main__':
-    from feature_engineering.util.sample_data import load_df
-    df = load_df('boston')
+    from feature_engineering.util.sample_data import _generate_testdf 
+    df = _generate_testdf(rows=50)
     fmap = feature_map.assign_featuretype(df)
 
     df_square = square_generation(df, fmap)
