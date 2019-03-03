@@ -6,12 +6,10 @@ def load_dataset(dataset="boston"):
     """ Load sample dataset from sklearn as pandas DataFrame
     """
     if dataset == "boston":
-        data = load_boston()
-        df = pd.DataFrame(data.data, columns=data.feature_names)
+        df = pd.DataFrame(load_boston().data, columns=load_boston().feature_names)
         return df
     elif dataset == "iris":
-        data = load_iris()
-        df = pd.DataFrame(data.data, columns=data.feature_names)
+        df = pd.DataFrame(load_iris().data, columns=load_iris().feature_names)
         return df
     else:
         print("Error: Unexpected dataset name")
