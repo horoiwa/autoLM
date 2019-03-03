@@ -1,7 +1,9 @@
+import numpy as np
+
 from .sample_data import load_df
 
 
-def assign_featuretype(df, criterio=15):
+def assign_featuretype(df, criterio=15, log=False):
     """ Assign feature types
         Parameters
         ----------
@@ -17,6 +19,7 @@ def assign_featuretype(df, criterio=15):
     feature_map = {"constant": [],
                    "binary": [],
                    "category": [],
+                   "ordinal": [],
                    "numerical": []
                    }
 
@@ -28,7 +31,10 @@ def assign_featuretype(df, criterio=15):
         elif len(set(data)) == 2:
             feature_map["binary"].append(col)
         elif len(set(data)) < criterio:
-            feature_map["category"].append(col)
+            if data.values.dtype == np.unicode:
+                feature_map["category"].append(col)
+            else:
+                feature_map["ordinal"].append(col)
         else:
             try:
                 [float(val) for val in data]
@@ -37,10 +43,14 @@ def assign_featuretype(df, criterio=15):
                 print("Invalid feature: {}".format(col))
                 print("{} ignored".format(col))
 
+    if log:
+        print()
+        print(feature_map)
+        print()
+
     return feature_map
 
 
 if __name__ == '__main__':
     df = load_df('boston')
-    feature_map = assign_featuretype(df)
-    print(feature_map)
+    feature_map = assign_featuretype(df, log=True)
