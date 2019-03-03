@@ -1,5 +1,3 @@
-import numpy as np
-
 from .sample_data import load_df, _generate_testdf
 
 

@@ -28,12 +28,17 @@ def _generate_testdf(rows=50):
     numerical = [np.random.uniform(100) for _ in range(rows)]
     ordinal = [random.choice([1, 2, 3, 4, 5]) for _ in range(rows)]
     categorical = [random.choice(["A", "B", "C", "D"]) for _ in range(rows)]
+    categorical2 = [random.choice(["E", "F", "G", "H"]) for _ in range(rows)]
     binary = [random.choice([0, 1]) for _ in range(rows)]
     
     df["num"] = numerical
+    df["num2"] = numerical
     df["cat"] = categorical
+    df["cat2"] = categorical2
     df["bin"] = binary
+    df["bin2"] = binary
     df["ord"] = ordinal
+    df["ord2"] = ordinal
 
     return df
     
