@@ -6,15 +6,35 @@ import random
 
 def load_df(dataset=None):
     """ Load sample dataset from sklearn as pandas DataFrame
+    
+    Return:
+    X : input features && dataframe
+    y : objective && dataframe
     """
     if dataset == "boston":
-        df = pd.DataFrame(load_boston().data,
+        X = pd.DataFrame(load_boston().data,
                           columns=load_boston().feature_names)
-        return df
+        
+        dummy = [random.choice(["Austin", "Houston", "Dallas"]) for _ in range(X.shape[0])]
+        X_dummy = pd.DataFrame(np.array(dummy).reshape(-1,1), columns=["USA"])
+        X = pd.concat([X, X_dummy], 1)
+
+        dummy = [random.choice(["Tokyo", "Kyoto", "Sapporo"]) for _ in range(X.shape[0])]
+        X_dummy = pd.DataFrame(np.array(dummy).reshape(-1,1), columns=["Japan"])
+        X = pd.concat([X, X_dummy], 1)
+        
+        dummy = [random.choice(["Armadiilo"]) for _ in range(X.shape[0])]
+        X_dummy = pd.DataFrame(np.array(dummy).reshape(-1,1), columns=["Animal"])
+        X = pd.concat([X, X_dummy], 1)
+        
+        y = pd.DataFrame(load_boston().target.reshape(-1, 1), columns=['Price'])
+        return X, y
+
     elif dataset == "iris":
-        df = pd.DataFrame(load_iris().data,
+        X = pd.DataFrame(load_iris().data,
                           columns=load_iris().feature_names)
-        return df
+        y = pd.DataFrame(load_iris.traget.reshape(-1, 1), columns=["Iris"])
+        return X, y
     else:
         print("Error: Unexpected dataset name")
         raise NotImplementedError
@@ -40,7 +60,8 @@ def _generate_testdf(rows=50):
     df["ord"] = ordinal
     df["ord2"] = ordinal
 
-    return df
+    y = "dummy"
+    return df, y
     
 
 if __name__ == '__main__':
