@@ -39,6 +39,11 @@ def load_df(dataset=None):
         print("Error: Unexpected dataset name")
         raise NotImplementedError
 
+def load_sample(dataset="boston"):
+    if dataset == "boston":
+        X, y = load_df(dataset='boston')
+        idx = random.choice(X.index)
+        return X.loc[idx, :], y.loc[idx, :] 
 
 def _generate_testdf(rows=50):
     """ Generate test dataset
