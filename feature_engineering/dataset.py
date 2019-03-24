@@ -1,9 +1,8 @@
 import pandas as pd
 import numpy as np
 
-from feature_engineering.mapping import simple_mapping
 from feature_engineering.util import (onehot_conversion, poly_generation,
-                                      standard_scaler)
+                                      standard_scaler, simple_mapping)
 
 
 class DataSet():
