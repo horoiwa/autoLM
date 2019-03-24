@@ -7,7 +7,7 @@ from feature_engineering.util import (onehot_conversion, poly_generation,
 
 
 class DataSet():
-    def __init__(self, criterio=15, poly=2, stsc=True):
+    def __init__(self, criterio=15, poly=1, stsc=True):
         self.X = None
         self.y = None
         self.models = {}
