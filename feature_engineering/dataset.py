@@ -7,7 +7,7 @@ from feature_engineering.util import (onehot_conversion, poly_generation,
 
 
 class DataSet():
-    def __init__(self, poly=2, stsc=True):
+    def __init__(self, criterio=15, poly=2, stsc=True):
         self.X = None
         self.y = None
         self.models = {}
@@ -25,6 +25,7 @@ class DataSet():
         self.selected_features = None
 
         # pipeline config
+        self.criterio = criterio
         self.poly = poly
         self.stsc = stsc
 
@@ -71,8 +72,8 @@ class DataSet():
         self._preprocess()
         self._postprocess()
 
-    def _preprocess(self, criterio=15):
-        self.fmap = simple_mapping(self.X, criterio=criterio)
+    def _preprocess(self):
+        self.fmap = simple_mapping(self.X, criterio=self.criterio)
 
         X_num = self.X[self.fmap["numeric"]]
         X_ord = self.X[self.fmap["ordinal"]]

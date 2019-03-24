@@ -33,7 +33,7 @@ if __name__ == '__main__':
     print()
     print("Feature selection By GA")
     print()
-    feature_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(20, 50))
-    print(dataset.selected_features)
+    selecter = FeatureSelectionGA(DataSet=dataset, n_features=(20, 50))
+    selecter = FeatureSelectionGA(X=dataset.X_sc, y=dataset.y, n_features=(20, 50))
 
 
