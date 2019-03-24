@@ -7,7 +7,7 @@ from feature_engineering.util import (onehot_conversion, poly_generation,
 
 
 class DataSet():
-    def __init__(self, poly=True, stsc=True):
+    def __init__(self, poly=2, stsc=True):
         self.X = None
         self.y = None
         self.models = {}
@@ -27,6 +27,9 @@ class DataSet():
         # pipeline config
         self.poly = poly
         self.stsc = stsc
+
+    def __repr__(self):
+        return "DataSet Object"
 
     def input_check(self):
         assert self.X.shape[0] == self.y.shape[0], "Error #1"
@@ -81,7 +84,7 @@ class DataSet():
     def _postprocess(self):
         if self.poly:
             self.X_poly, self.models["poly"] = poly_generation(self.X_pre,
-                                                               n=2, model=None)
+                                                               n=self.poly, model=None)
         else:
             self.X_poly = self.X_pre
         

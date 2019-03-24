@@ -9,7 +9,8 @@ if __name__ == '__main__':
     X, y = load_df("boston")
     X_sample, y_sample = load_sample('boston') 
 
-    dataset = DataSet(poly=False)
+    dataset = DataSet(poly=3)
+    print(dataset)
     dataset.fit(X, y)
 
     print()
@@ -28,3 +29,11 @@ if __name__ == '__main__':
     print(np.all(X_post.columns == X_post_sample.columns))
     print(X_post.head())
     print(X_post_sample)
+
+    print()
+    print("Feature selection By GA")
+    print()
+    feature_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(20, 50))
+    print(dataset.selected_features)
+
+
