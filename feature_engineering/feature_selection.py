@@ -91,7 +91,17 @@ class RidgeGA():
     def run(self):
         """ Feature optimization by NSGA-2
             max_item means max_feature
+
+            TODO: RESULT OUTPUt
+                  individual generation by random ratio
         """
+        def generateIndividual(container, n):
+            ratio = random.uniform(self._MIN_FEATURES/n,
+                                   self._MAX_FEATURES/n)
+            generated_val = [np.random.binomial(1, ratio) for _ in range(n)]
+            individual = container(generated_val)
+            return individual
+
         def evalIndividual(individual):
             n_features = sum(individual)
             
@@ -118,8 +128,6 @@ class RidgeGA():
             pop = toolbox.population(n=MU)
             hof = tools.ParetoFront()
             stats = tools.Statistics(lambda ind: ind.fitness.values)
-            stats.register("avg", np.mean, axis=0)
-            stats.register("std", np.std, axis=0)
             stats.register("min", np.min, axis=0)
             stats.register("max", np.max, axis=0)
            
@@ -129,14 +137,13 @@ class RidgeGA():
             return pop, log, hof
 
 
-        #  特徴数を最小化　精度を最大化
+        # 特徴数を最小化　精度を最大化
         creator.create("Fitness", base.Fitness, weights=self.weights)   
         creator.create("Individual", list, fitness=creator.Fitness)
 
         toolbox = base.Toolbox()
-        toolbox.register("attr_bool", random.randint, 0, 1)
-        toolbox.register("individual", tools.initRepeat, creator.Individual, 
-                         toolbox.attr_bool, self.X.shape[1])
+
+        toolbox.register("individual", generateIndividual, creator.Individual, self.X.shape[1])
         toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
         toolbox.register("evaluate", evalIndividual)
@@ -146,8 +153,6 @@ class RidgeGA():
 
         self.pop, self.log, self.hof = main()
         self.result = self.create_result()
-
-        print("GA gracefully finished")
 
     def create_result(self):
         scores = []
