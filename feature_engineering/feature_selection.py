@@ -13,16 +13,12 @@ from feature_engineering.dataset import DataSet
 
 
 class FeatureSelectionGA():
-    def __init__(self, DataSet=None, X=None, y=None, n_features=(None, None)):
+    def __init__(self, DataSet=None, n_features=(None, None)):
 
-        self.DataSet = DataSet
+        self.dataset = DataSet
 
-        if self.DataSet:
-            self.X = self.DataSet.X_sc
-            self.y = self.DataSet.y
-        else:
-            self.X = X
-            self.y = y
+        self.X = self.dataset.X_sc
+        self.y = self.dataset.y
 
         self.min_features = n_features[0]
         self.max_features = n_features[1]
@@ -30,15 +26,15 @@ class FeatureSelectionGA():
         self.initial_check()
 
     def initial_check(self):
-        if self.DataSet:
-            assert self.DataSet.__repr__() == DataSet().__repr__(), "Error #21"
         assert self.min_features, "n_features required"       
         assert self.max_features, "n_features required"
         assert self.max_features > self.min_features, "max min"
 
     def run_RidgeGA(self, n_gen, n_eval):
-        self.ridgeGA = RidgeGA(X=self.X, y=self.y, max_features=self.max_features,
-                               min_features=self.min_features, n_gen=n_gen, n_eval=n_eval)
+        self.ridgeGA = RidgeGA(X=self.X, y=self.y,
+                               max_features=self.max_features,
+                               min_features=self.min_features,
+                               n_gen=n_gen, n_eval=n_eval)
         
         df_result = self.ridgeGA.run()
         self.set_selected_features(df_result)
@@ -47,7 +43,7 @@ class FeatureSelectionGA():
         df_n_score = df_result[["N", "SCORE"]]
         df_features = df_result.drop(["N", "SCORE"], 1)
         
-        self.DataSet.ga_result = df_n_score
+        self.dataset.ga_result = df_n_score
         
         for idx in df_n_score.index:
             n = df_n_score.loc[idx, 'N']
@@ -55,7 +51,7 @@ class FeatureSelectionGA():
             temp = df_features.loc[idx, :]
             selected_features = df_features.columns[[bool(val) for val in temp]]
 
-            self.DataSet._selected_features[n] = self.X[selected_features]
+            self.dataset._selected_features[n] = self.X[selected_features]
 
 
 class RidgeGA():

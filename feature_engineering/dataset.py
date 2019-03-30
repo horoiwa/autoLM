@@ -96,5 +96,34 @@ class DataSet():
             self.X_sc = self.X_poly
 
 
+class DummyDataSet():
+    def __init__(self):
+        self.X = None
+        self.y = None
+
+        self.models = {}
+
+        self.fmap = None
+        self.cmap = None
+
+        # temp dataset
+        self.X_pre = None
+        self.X_poly = None
+        
+        # Ready to machine learning
+        self.X_sc = None
+
+        # Dataset after feature selection
+        self.ga_result = None
+        self._selected_features = {} 
+
+    def fit(self, X, y):
+        self.X = X
+        self.y = y
+        self.X_sc = X
+
+    def transform(self, X):
+        return X
+
 if __name__ == '__main__':
     print("hello")
