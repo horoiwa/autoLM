@@ -39,11 +39,23 @@ class FeatureSelectionGA():
     def run_RidgeGA(self, n_gen, n_eval):
         self.ridgeGA = RidgeGA(X=self.X, y=self.y, max_features=self.max_features,
                                min_features=self.min_features, n_gen=n_gen, n_eval=n_eval)
-        self.ridgeGA.run()
+        
+        df_result = self.ridgeGA.run()
+        self.set_selected_features(df_result)
+        
+    def set_selected_features(self, df_result):
+        df_n_score = df_result[["N", "SCORE"]]
+        df_features = df_result.drop(["N", "SCORE"], 1)
+        
+        self.DataSet.ga_result = df_n_score
+        
+        for idx in df_n_score.index:
+            n = df_n_score.loc[idx, 'N']
 
-    def set_selected_feature(self):
-        self.DataSet.selected_features = "Selected"
-        self.DataSet.X_fin = self.DataSet.X_sc["Selected"]
+            temp = df_features.loc[idx, :]
+            selected_features = df_features.columns[[bool(val) for val in temp]]
+
+            self.DataSet._selected_features[n] = self.X[selected_features]
 
 
 class RidgeGA():
@@ -55,7 +67,7 @@ class RidgeGA():
         self.y = y
 
         self.weights = (-1.0, 1.0)
-        self.n_eval = n_eval 
+        self.n_eval = n_eval
         self.n_gen = n_gen
 
         self.pop = None
@@ -92,8 +104,6 @@ class RidgeGA():
         """ Feature optimization by NSGA-2
             max_item means max_feature
 
-            TODO: RESULT OUTPUt
-                  individual generation by random ratio
         """
         def generateIndividual(container, n):
             ratio = random.uniform(self._MIN_FEATURES/n,
@@ -153,6 +163,9 @@ class RidgeGA():
 
         self.pop, self.log, self.hof = main()
         self.result = self.create_result()
+        print("GA finised gracefully")
+        
+        return self.result
 
     def create_result(self):
         scores = []
@@ -165,6 +178,12 @@ class RidgeGA():
 
         X = pd.DataFrame(np.array(self.hof), columns=self.X.columns) 
         scores = pd.DataFrame(np.array(scores), columns=["SCORE"])
-        n_features = pd.DataFrame(np.array(n_features), columns=["N_feature"])
-        result = pd.concat([scores, n_features, X], 1)
+        n_features = pd.DataFrame(np.array(n_features), columns=["N"])
+        try:
+            result = pd.concat([n_features, scores, X], 1)
+        except TypeError:
+            X.to_csv("../error_X.csv")
+            score.to_csv("../error_score.csv")
+            n_features.to_csv("../error_n.csv")
+
         return result

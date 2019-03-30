@@ -9,7 +9,7 @@ if __name__ == '__main__':
     X, y = load_df("boston")
     X_sample, y_sample = load_sample('boston') 
 
-    dataset = DataSet(poly=3)
+    dataset = DataSet(poly=2)
     print(dataset)
     dataset.fit(X, y)
 
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     print()
     print("Run Feature selection By GA")
     print()
-    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(30, 50))
-    ga_selecter.run_RidgeGA(n_gen=10, n_eval=3)
+    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(10, 50))
+    ga_selecter.run_RidgeGA(n_gen=3, n_eval=3)
     print("GA finished")
 
-
+    print(dataset.ga_result)

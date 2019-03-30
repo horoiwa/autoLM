@@ -17,11 +17,13 @@ class DataSet():
         # temp dataset
         self.X_pre = None
         self.X_poly = None
+        
+        # Ready to machine learning
         self.X_sc = None
 
         # Dataset after feature selection
-        self.X_fin = None
-        self.selected_features = None
+        self.ga_result = None
+        self._selected_features = {} 
 
         # pipeline config
         self.criterio = criterio
