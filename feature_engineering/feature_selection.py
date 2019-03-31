@@ -4,12 +4,11 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import RidgeCV
 from sklearn.model_selection import train_test_split
+
 from deap import algorithms
 from deap import base
 from deap import creator
 from deap import tools
-
-from feature_engineering.dataset import DataSet
 
 
 class FeatureSelectionGA():
@@ -137,8 +136,10 @@ class RidgeGA():
             stats.register("min", np.min, axis=0)
             stats.register("max", np.max, axis=0)
            
-            pop, log = algorithms.eaMuPlusLambda(pop, toolbox, MU, LAMBDA, CXPB,
-                                                 MUTPB, NGEN, stats, halloffame=hof)
+            pop, log = algorithms.eaMuPlusLambda(pop, toolbox, MU,
+                                                 LAMBDA, CXPB,
+                                                 MUTPB, NGEN, 
+                                                 stats, halloffame=hof)
 
             return pop, log, hof
 

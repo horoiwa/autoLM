@@ -33,8 +33,18 @@ if __name__ == '__main__':
     print()
     print("Run Feature selection By GA")
     print()
-    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(10, 50))
-    ga_selecter.run_RidgeGA(n_gen=3, n_eval=3)
+    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(10, 30))
+    ga_selecter.run_RidgeGA(n_gen=30, n_eval=40)
     print("GA finished")
+    
+    with open('../dataset.pkl', 'wb') as f:
+        pickle.dump(dataset, f)
+
+    with open('../dataset.pkl', 'rb') as f:
+        dataset = pickle.load(f)
 
     print(dataset.ga_result)
+    for key in dataset._selected_features.keys():
+        print()
+        print(dataset._selected_features[key].columns)
+        print()
