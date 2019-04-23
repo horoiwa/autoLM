@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import numpy as np
 
@@ -8,6 +10,7 @@ from autoML.util import (onehot_conversion, poly_generation,
 class DataSet():
     def __init__(self, project_name, criterio=15, poly=1, stsc=True):
         self.project_name = project_name
+        self._create_project_dir()        
         
         self.X = None
         self.y = None
@@ -116,6 +119,18 @@ class DataSet():
         else:
             self.X_sc = self.X_poly
 
+    def _create_project_dir(self):
+        def rename_project(name, n):
+            new_name = name + "_({})".format(n)  
+            if os.path.exists(new_name):
+                new_name = rename_project(name, n+1)
+            return new_name
+
+        if os.path.exists(self.project_name):
+            self.project_name = rename_project(self.project_name, 1)
+            print("Warning: project_name is dupilicated and renamed to {}".format(self.project_name))
+        os.makedirs(self.project_name)
+        
 
 if __name__ == '__main__':
     print("hello")
