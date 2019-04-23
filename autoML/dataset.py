@@ -39,6 +39,9 @@ class DataSet():
         assert len(self.y.columns) > 0, "Error #3"
 
     def transform(self, X):
+        """ 実装予定
+            引き算割り算記述子の追加
+        """
         if type(X) == pd.Series:
             X = pd.DataFrame(X).T
         else:
