@@ -1,6 +1,6 @@
-from feature_engineering.support import load_df, load_sample
-from feature_engineering.dataset import DataSet
-from feature_engineering.feature_selection import FeatureSelectionGA
+from autoML.support import load_df, load_sample
+from autoML.dataset import DataSet
+from autoML.feature_selection import FeatureSelectionGA
 import pickle
 import numpy as np
 
