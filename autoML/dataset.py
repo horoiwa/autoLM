@@ -6,7 +6,9 @@ from autoML.util import (onehot_conversion, poly_generation,
 
 
 class DataSet():
-    def __init__(self, criterio=15, poly=1, stsc=True):
+    def __init__(self, project_name, criterio=15, poly=1, stsc=True):
+        self.project_name = project_name
+        
         self.X = None
         self.y = None
         self.models = {}
@@ -14,29 +16,33 @@ class DataSet():
         self.fmap = None
         self.cmap = None
 
-        # temp dataset
+        # データ途中経過
         self.X_pre = None
         self.X_poly = None
-        
-        # Ready to machine learning
         self.X_sc = None
-
-        # Dataset after feature selection
-        self.ga_result = None
-        self._selected_features = {} 
 
         # pipeline config
         self.criterio = criterio
         self.poly = poly
         self.stsc = stsc
 
+        # final counter
+        self.fit_count = 0
+
     def __repr__(self):
         return "DataSet Object"
 
     def input_check(self):
+        assert isinstance(self.X, 
+                          (pd.DataFrame, pd.Series)
+                          ), "input must be DataFrame or Series"
+        assert isinstance(self.y, 
+                          (pd.DataFrame, pd.Series)
+                          ), "input must be DataFrame or Series"
+
         assert self.X.shape[0] == self.y.shape[0], "Error #1"
         assert len(self.X.columns) > 0, "Error #2"
-        assert len(self.y.columns) > 0, "Error #3"
+        assert len(self.y.columns) == 1, "Y should have just one column"
 
     def transform(self, X):
         """ 実装予定
@@ -69,12 +75,24 @@ class DataSet():
         return X_sc
 
     def fit(self, X, y):
+        assert self.fit_count == 0, "Fit can use only once"
+        
         self.X = X
         self.y = y
         self.input_check()
 
         self._preprocess()
         self._postprocess()
+
+        self.fit_count += 1
+
+    def get_X_processed(self):
+        """Return converted dataset
+        """
+        if np.any(self.X_sc):
+            return self.X_sc
+        else:
+            print("Dataset is Empty: use fit method")
 
     def _preprocess(self):
         self.fmap = simple_mapping(self.X, criterio=self.criterio)
@@ -98,35 +116,6 @@ class DataSet():
         else:
             self.X_sc = self.X_poly
 
-
-class DummyDataSet():
-    def __init__(self):
-        self.X = None
-        self.y = None
-
-        self.models = {}
-
-        self.fmap = None
-        self.cmap = None
-
-        # temp dataset
-        self.X_pre = None
-        self.X_poly = None
-        
-        # Ready to machine learning
-        self.X_sc = None
-
-        # Dataset after feature selection
-        self.ga_result = None
-        self._selected_features = {} 
-
-    def fit(self, X, y):
-        self.X = X
-        self.y = y
-        self.X_sc = X
-
-    def transform(self, X):
-        return X
 
 if __name__ == '__main__':
     print("hello")

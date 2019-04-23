@@ -2,7 +2,7 @@ import random
 
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import RidgeCV
+from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 
 from deap import algorithms
@@ -16,11 +16,14 @@ class FeatureSelectionGA():
 
         self.dataset = DataSet
 
-        self.X = self.dataset.X_sc
+        self.X = self.dataset.get_X_processed()
         self.y = self.dataset.y
 
         self.min_features = n_features[0]
         self.max_features = n_features[1]
+
+        self.ga_result = None
+        self.selected_features = {} 
 
         self.initial_check()
 
@@ -37,12 +40,12 @@ class FeatureSelectionGA():
         
         df_result = self.ridgeGA.run()
         self.set_selected_features(df_result)
-        
+
     def set_selected_features(self, df_result):
         df_n_score = df_result[["N", "SCORE"]]
         df_features = df_result.drop(["N", "SCORE"], 1)
         
-        self.dataset.ga_result = df_n_score
+        self.ga_result = df_n_score
         
         for idx in df_n_score.index:
             n = df_n_score.loc[idx, 'N']
@@ -50,7 +53,7 @@ class FeatureSelectionGA():
             temp = df_features.loc[idx, :]
             selected_features = df_features.columns[[bool(val) for val in temp]]
 
-            self.dataset._selected_features[n] = self.X[selected_features]
+            self.selected_features[n] = self.X[selected_features]
 
 
 class RidgeGA():
@@ -75,7 +78,7 @@ class RidgeGA():
         self._TOTAL_FEATURES = self.X.shape[1]
 
     def eval_score(self, X, n):
-        """ RidgeCV
+        """ Ridge alpha=1.0
             Parameters
             -------------
             X: pandas dataframe
@@ -88,7 +91,7 @@ class RidgeGA():
         scores = []
         for _ in range(n):
             X_train, X_test, y_train, y_test = train_test_split(X, self.y, test_size=0.4) 
-            model = RidgeCV()
+            model = Ridge(alpha=1.0)
             model.fit(X_train, y_train)
             scores.append(model.score(X_test, y_test))
 
@@ -144,7 +147,7 @@ class RidgeGA():
             return pop, log, hof
 
 
-        # 特徴数を最小化　精度を最大化
+        #特徴数を最小化　精度を最大化
         creator.create("Fitness", base.Fitness, weights=self.weights)   
         creator.create("Individual", list, fitness=creator.Fitness)
 

@@ -9,7 +9,7 @@ if __name__ == '__main__':
     X, y = load_df("boston")
     X_sample, y_sample = load_sample('boston') 
 
-    dataset = DataSet(poly=2)
+    dataset = DataSet("sample project", poly=1)
     print(dataset)
     dataset.fit(X, y)
 
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     print()
     print("Run Feature selection By GA")
     print()
-    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(10, 30))
-    ga_selecter.run_RidgeGA(n_gen=30, n_eval=40)
+    ga_selecter = FeatureSelectionGA(DataSet=dataset, n_features=(10, 20))
+    ga_selecter.run_RidgeGA(n_gen=3, n_eval=10)
     print("GA finished")
     
     with open('../dataset.pkl', 'wb') as f:
@@ -43,8 +43,8 @@ if __name__ == '__main__':
     with open('../dataset.pkl', 'rb') as f:
         dataset = pickle.load(f)
 
-    print(dataset.ga_result)
-    for key in dataset._selected_features.keys():
+    print(ga_selecter.ga_result)
+    for key in ga_selecter.selected_features.keys():
         print()
-        print(dataset._selected_features[key].columns)
+        print(ga_selecter.selected_features[key].columns)
         print()
