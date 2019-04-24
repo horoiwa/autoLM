@@ -1,5 +1,6 @@
 import os
 
+import pickle
 import pandas as pd
 import numpy as np
 
@@ -87,7 +88,13 @@ class DataSet():
         self._preprocess()
         self._postprocess()
 
+        self._save_dataset()
         self.fit_count += 1
+
+    def _save_dataset(self):
+        savepath = os.path.join(self.project_name, 'dataset.pkl')
+        with open(savepath, 'wb') as f:
+            pickle.dump(self, f)
 
     def get_X_processed(self):
         """Return converted dataset

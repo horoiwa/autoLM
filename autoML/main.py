@@ -1,15 +1,25 @@
+import shutil
+import os
+import pickle
+
+import numpy as np
+
 from autoML.support import load_df, load_sample
 from autoML.dataset import DataSet
 from autoML.feature_selection import FeatureSelectionGA
-import pickle
-import numpy as np
+from autoML.extended_linear_model import RidgeRPRS
 
-
-if __name__ == '__main__':
+def main():
+    """GAtest
+    """
+    project_name = "sample project"
+    if os.path.exists(project_name):
+        shutil.rmtree(project_name)
+    
     X, y = load_df("boston")
     X_sample, y_sample = load_sample('boston') 
 
-    dataset = DataSet("sample project", poly=1)
+    dataset = DataSet(project_name, poly=1)
     print(dataset)
     dataset.fit(X, y)
 
@@ -48,3 +58,39 @@ if __name__ == '__main__':
         print()
         print(ga_selecter.selected_features[key].columns)
         print()
+
+
+def main2():
+    """
+        test for feature screening
+    """
+    pass
+
+
+def main3():
+    """
+        test for extended linear models
+    """
+    project_name = "sample project"
+    if os.path.exists(project_name):
+        shutil.rmtree(project_name)
+    
+    X, y = load_df("boston")
+    X_sample, y_sample = load_sample('boston') 
+
+    dataset = DataSet(project_name, poly=1)
+    print(dataset)
+    dataset.fit(X, y)
+
+    model = RidgeRPRS(dataset, n_models=1000)
+    model.evaluate()
+
+    model.fit()
+    mean, std = model.predict(dataset.transform(X_sample))
+    print("Pred:", mean, std)
+    print("Obs:", y_sample)
+
+if __name__ == '__main__':
+    #main()
+    #main2()
+    main3()
