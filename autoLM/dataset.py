@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 
 from autoLM.util import (onehot_conversion, poly_generation,
-                         standard_scaler, simple_mapping)
+                         standard_scaler, simple_mapping,
+                         arithmetic_transform)
 
 
 class DataSet():
@@ -66,8 +67,10 @@ class DataSet():
         X_onehot = onehot_conversion(X_cat, model=self.models["onehot"])
         X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
 
-        if self.poly:
+        if self.poly > 1:
             X_poly = poly_generation(X_pre, model=self.models["poly"])
+            X_arith = arithmetic_transform(X_num)
+            X_poly = pd.concat([X_poly, X_arith], 1)
         else:
             X_poly = X_pre
 
@@ -115,9 +118,13 @@ class DataSet():
         self.X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
 
     def _postprocess(self):
-        if self.poly:
+        if self.poly > 1:
             self.X_poly, self.models["poly"] = poly_generation(self.X_pre,
-                                                               n=self.poly, model=None)
+                                                               n=self.poly, 
+                                                               model=None)
+            X_num = self.X[self.fmap["numeric"]]
+            X_arith = arithmetic_transform(X_num)
+            self.X_poly = pd.concat([self.X_poly, X_arith], 1)
         else:
             self.X_poly = self.X_pre
         

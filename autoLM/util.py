@@ -1,3 +1,5 @@
+from itertools import combinations
+
 import pandas as pd
 from sklearn.preprocessing import (PolynomialFeatures, OneHotEncoder, 
                                    StandardScaler)
@@ -82,3 +84,23 @@ def simple_mapping(dataframe, criterio=15):
                 raise ValueError
 
     return fmap
+
+
+def arithmetic_transform(X_num):
+    X_arith = pd.DataFrame()
+
+    columns = X_num.columns
+    for col1, col2 in combinations(columns, 2):
+        col_name = "{}-{}".format(col1, col2)
+        X_arith[col_name] = X_num[col1] - X_num[col2]
+
+    return X_arith
+
+
+if __name__ == '__main__':
+    from autoLM.support import load_df
+    X, y = load_df("boston")
+    usecol = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX']
+    X = X[usecol]
+    X_mod = arithmetic_transform(X)
+    print(X_mod.head())

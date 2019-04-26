@@ -20,10 +20,13 @@ def main():
     X, y = load_df("boston")
     X_sample, y_sample = load_sample('boston') 
 
-    dataset = DataSet(project_name, poly=1)
+    dataset = DataSet(project_name, poly=2)
     print(dataset)
     dataset.fit(X, y)
+    X_test1 = dataset.get_X_processed()
+    X_test2 = dataset.transform(X)
 
+    assert np.all(X_test1.values == X_test2.values)
     print()
     print("PICKLE TEST")
     print()
@@ -83,7 +86,7 @@ def main3():
     print(dataset)
     dataset.fit(X, y)
 
-    model = RidgeRPRS(dataset, n_models=1000)
+    model = RidgeRPRS(dataset, n_models=100)
     model.evaluate()
 
     model.fit()
@@ -91,7 +94,8 @@ def main3():
     print("Pred:", mean, std)
     print("Obs:", y_sample)
 
+
 if __name__ == '__main__':
-    #main()
+    main()
     #main2()
-    main3()
+    #main3()
