@@ -4,10 +4,11 @@ import pickle
 
 import numpy as np
 
-from autoML.support import load_df, load_sample
-from autoML.dataset import DataSet
-from autoML.feature_selection import FeatureSelectionGA
-from autoML.extended_linear_model import RidgeRPRS
+from autoLM.support import load_df, load_sample
+from autoLM.dataset import DataSet
+from autoLM.feature_selection import FeatureSelectionGA
+from autoLM.extended_linear_model import RidgeRPRS
+
 
 def main():
     """GAtest

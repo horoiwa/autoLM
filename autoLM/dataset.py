@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 import numpy as np
 
-from autoML.util import (onehot_conversion, poly_generation,
+from autoLM.util import (onehot_conversion, poly_generation,
                          standard_scaler, simple_mapping)
 
 
