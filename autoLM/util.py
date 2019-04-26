@@ -97,10 +97,15 @@ def arithmetic_transform(X_num):
     return X_arith
 
 
+def get_promising_columns(X_sc, y, threthold=2000):
+    yX = pd.concat([y, X_sc], 1)
+    corrmat = yX.corr()**2
+    promising = corrmat.nlargest(min(X_sc.shape[1], threthold), y.columns[0])
+    return list(promising[1:].index) 
+
+
 if __name__ == '__main__':
     from autoLM.support import load_df
     X, y = load_df("boston")
-    usecol = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX']
-    X = X[usecol]
-    X_mod = arithmetic_transform(X)
-    print(X_mod.head())
+    print(X.shape[1])
+    get_promising_columns(X, y)

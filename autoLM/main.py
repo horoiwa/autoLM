@@ -25,6 +25,7 @@ def main():
     dataset.fit(X, y)
     X_test1 = dataset.get_X_processed()
     X_test2 = dataset.transform(X)
+    X_test1.to_csv("test.csv")
 
     assert np.all(X_test1.values == X_test2.values)
     print()
@@ -40,10 +41,9 @@ def main():
     X_post_sample = dataset.transform(X_sample)
 
     print("Consistency check")
-    print(np.all(X_post.columns == X_post_sample.columns))
     print(X_post.head())
-    print(X_post_sample)
-
+    X_post_sample.to_csv("sample.csv")
+    
     print()
     print("Run Feature selection By GA")
     print()

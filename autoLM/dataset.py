@@ -6,11 +6,12 @@ import numpy as np
 
 from autoLM.util import (onehot_conversion, poly_generation,
                          standard_scaler, simple_mapping,
-                         arithmetic_transform)
+                         arithmetic_transform, get_promising_columns)
 
 
 class DataSet():
-    def __init__(self, project_name, criterio=15, poly=1, stsc=True):
+    def __init__(self, project_name, criterio=15, poly=1,
+                 stsc=True, cutoff=200):
         self.project_name = project_name
         self._create_project_dir()        
         
@@ -30,6 +31,8 @@ class DataSet():
         self.criterio = criterio
         self.poly = poly
         self.stsc = stsc
+        self.promising_columns = None
+        self.cutoff = cutoff
 
         # final counter
         self.fit_count = 0
@@ -69,8 +72,9 @@ class DataSet():
 
         if self.poly > 1:
             X_poly = poly_generation(X_pre, model=self.models["poly"])
-            X_arith = arithmetic_transform(X_num)
-            X_poly = pd.concat([X_poly, X_arith], 1)
+            #X_arith = arithmetic_transform(X_num)
+            #X_arith.index = X_poly.index
+            #X_poly = pd.concat([X_poly, X_arith], 1)
         else:
             X_poly = X_pre
 
@@ -78,6 +82,9 @@ class DataSet():
             X_sc = standard_scaler(X_poly, model=self.models['stsc'])
         else:
             X_sc = X_poly
+
+        if self.promising_columns:
+            X_sc = X_sc[self.promising_columns]
 
         return X_sc
 
@@ -122,9 +129,9 @@ class DataSet():
             self.X_poly, self.models["poly"] = poly_generation(self.X_pre,
                                                                n=self.poly, 
                                                                model=None)
-            X_num = self.X[self.fmap["numeric"]]
-            X_arith = arithmetic_transform(X_num)
-            self.X_poly = pd.concat([self.X_poly, X_arith], 1)
+            #X_num = self.X[self.fmap["numeric"]]
+            #X_arith = arithmetic_transform(X_num)
+            #self.X_poly = pd.concat([self.X_poly, X_arith], 1)
         else:
             self.X_poly = self.X_pre
         
@@ -132,6 +139,10 @@ class DataSet():
             self.X_sc, self.models['stsc'] = standard_scaler(self.X_poly)
         else:
             self.X_sc = self.X_poly
+
+        if self.X_sc.shape[1] > self.cutoff:
+            self.promising_columns = get_promising_columns(self.X_sc, self.y, self.cutoff)
+            self.X_sc = self.X_sc[self.promising_columns]
 
     def _create_project_dir(self):
         def rename_project(name, n):
