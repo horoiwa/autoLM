@@ -13,10 +13,10 @@ class FeatureScreeningGA():
         self.dataset = dataset
         self.n_features = n_features
 
-        self.n_gen =3
-        self.n_eval = 10
+        self.n_gen = n_gen
+        self.n_eval = n_eval
 
-        self.logdir = os.path.join(self.dataset.project_name, "FeatureScreening")
+        self.logdir = os.path.join(self.dataset.project_name, "FeatureScreeningGA")
 
     def run(self, prescreening=20, postscreening=6, n_jobs=1):
         os.makedirs(self.logdir)
