@@ -101,7 +101,7 @@ if __name__ == '__main__':
     from autoLM.support import load_df
     from autoLM.dataset import DataSet
 
-    project_name = "sample project"
+    project_name = "sample_project"
     if os.path.exists(project_name):
         shutil.rmtree(project_name)
 
