@@ -24,8 +24,11 @@ class FeatureSelectionGA():
 
         self.ga_result = None
         self.selected_features = {} 
-
         self.initial_check()
+
+    def set_usecols(self, usecols):
+        self.usecols = usecols
+        self.X = self.X[usecols]
 
     def initial_check(self):
         assert self.min_features, "n_features required"       

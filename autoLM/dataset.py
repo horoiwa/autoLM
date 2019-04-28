@@ -11,7 +11,7 @@ from autoLM.util import (onehot_conversion, poly_generation,
 
 class DataSet():
     def __init__(self, project_name, criterio=15, poly=1,
-                 stsc=True, cutoff=200):
+                 stsc=True, cutoff=2000):
         self.project_name = project_name
         self._create_project_dir()        
         
@@ -72,9 +72,6 @@ class DataSet():
 
         if self.poly > 1:
             X_poly = poly_generation(X_pre, model=self.models["poly"])
-            #X_arith = arithmetic_transform(X_num)
-            #X_arith.index = X_poly.index
-            #X_poly = pd.concat([X_poly, X_arith], 1)
         else:
             X_poly = X_pre
 
@@ -129,9 +126,6 @@ class DataSet():
             self.X_poly, self.models["poly"] = poly_generation(self.X_pre,
                                                                n=self.poly, 
                                                                model=None)
-            #X_num = self.X[self.fmap["numeric"]]
-            #X_arith = arithmetic_transform(X_num)
-            #self.X_poly = pd.concat([self.X_poly, X_arith], 1)
         else:
             self.X_poly = self.X_pre
         
