@@ -1,0 +1,28 @@
+GA_1st_No0
+Run Feature selection By GA 
+
+
+N_features: 5 
+Score 0.6919570815192766
+
+[NOX TAX,RM B,TAX USA_Austin,PTRATIO B,B LSTAT]
+
+
+N_features: 6 
+Score 0.6992725456867162
+
+[AGE,CHAS,CRIM Japan_Tokyo,RM^2,RM LSTAT,LSTAT USA_Houston]
+
+
+N_features: 8 
+Score 0.7416836117865577
+
+[RM^2,RM B,RM LSTAT,DIS USA_Dallas,TAX Japan_Kyoto,PTRATIO B,PTRATIO LSTAT,RAD^2]
+
+
+N_features: 9 
+Score 0.7431981772552589
+
+[LSTAT,INDUS USA_Dallas,RM^2,RM B,RM LSTAT,DIS TAX,CHAS RAD,USA_Houston Japan_Tokyo,Japan_Tokyo^2]
+
+GA finished 

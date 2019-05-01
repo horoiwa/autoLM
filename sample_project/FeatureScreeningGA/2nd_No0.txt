@@ -1,0 +1,22 @@
+GA_2nd_No0
+Run Feature selection By GA 
+
+
+N_features: 5 
+Score 0.759001853215317
+
+[RM LSTAT,RM B,LSTAT,PTRATIO^2,RM^2]
+
+
+N_features: 6 
+Score 0.752802014028056
+
+[RM LSTAT,RM B,PTRATIO B,LSTAT,PTRATIO^2,RM^2]
+
+
+N_features: 8 
+Score 0.7389428509002903
+
+[RM LSTAT,USA_Houston Japan_Kyoto,TAX USA_Austin,LSTAT,LSTAT Japan_Kyoto,PTRATIO LSTAT,NOX TAX,RM^2]
+
+GA finished 

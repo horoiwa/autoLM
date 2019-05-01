@@ -1,0 +1,22 @@
+GA_1st_No2
+Run Feature selection By GA 
+
+
+N_features: 5 
+Score 0.691378264828211
+
+[RM^2,RM LSTAT,RM RAD,DIS LSTAT,USA_Houston Japan_Kyoto]
+
+
+N_features: 6 
+Score 0.6965364121473737
+
+[CRIM RM,INDUS PTRATIO,RM^2,RM LSTAT,USA_Austin Japan_Sapporo,USA_Houston Japan_Sapporo]
+
+
+N_features: 7 
+Score 0.7379314798617165
+
+[LSTAT,INDUS PTRATIO,RM^2,RM LSTAT,DIS RAD,LSTAT Japan_Kyoto,Japan_Tokyo^2]
+
+GA finished 

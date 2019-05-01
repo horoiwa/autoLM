@@ -1,0 +1,7 @@
+------------------------------------
+RM LSTAT,RM RAD,INDUS USA_Austin,RM B,PTRATIO B,DIS Japan_Sapporo,USA_Dallas Japan_Tokyo,USA_Houston Japan_Kyoto,TAX USA_Austin,LSTAT,DIS LSTAT,PTRATIO^2,LSTAT Japan_Kyoto,PTRATIO LSTAT,NOX TAX,RM^2,B LSTAT
+------------------------------------
+NOX TAX,RM B,TAX USA_Austin,PTRATIO B,B LSTAT
+RM^2,DIS Japan_Sapporo,PTRATIO^2,PTRATIO LSTAT,USA_Dallas Japan_Tokyo
+RM^2,RM LSTAT,RM RAD,DIS LSTAT,USA_Houston Japan_Kyoto
+LSTAT,INDUS USA_Austin,RM^2,RM LSTAT,LSTAT Japan_Kyoto

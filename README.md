@@ -1,6 +1,7 @@
 ## autoLM (Auto Linear regression Modeling)
 
 `pip install deap joblib`
+`pip install sklearn==0.20.1` or 'pip install --upgrade sklearn'
 
 
 ### 自動化された線形回帰モデリング

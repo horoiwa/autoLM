@@ -123,10 +123,8 @@ class DataSet():
     def get_X_processed(self):
         """Return converted dataset
         """
-        if np.any(self.X_sc):
-            return self.X_sc
-        else:
-            print("Dataset is Empty: use fit method")
+        assert self.fit_count == 1,  "Dataset is Empty: use fit method"
+        return self.X_sc
 
     def _preprocess(self):
         self.fmap = simple_mapping(self.X, criterio=self.criterio)

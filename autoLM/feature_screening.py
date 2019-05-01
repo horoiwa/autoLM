@@ -30,7 +30,7 @@ class FeatureScreeningGA():
         print(self._get_unique(postscreen_results))
 
         self._create_summary(postscreen_results)
-    
+
     def _create_summary(self, postscreen_results):
         selected_features = []
         for _list in postscreen_results:
@@ -43,7 +43,7 @@ class FeatureScreeningGA():
 
     def _print_log(self, fname, results):
         with open(os.path.join(self.logdir, fname), 'a') as f:
-            unique_features = self._get_unique(results) 
+            unique_features = self._get_unique(results)
             f.write("---"*12+"\n")
             f.write(",".join(unique_features))
             f.write("\n")
@@ -51,7 +51,7 @@ class FeatureScreeningGA():
             for result in results:
                 line = ",".join(result)
                 f.write(line+"\n")
-    
+
     def _get_unique(self, lists_in_list):
         features = []
         for _list in lists_in_list:
@@ -60,9 +60,9 @@ class FeatureScreeningGA():
 
         unique = list(set(features))
         return unique
-         
+
     def _ga_selection(self, name, usecols=None):
-        ga_selecter = FeatureSelectionGA(DataSet=dataset, 
+        ga_selecter = FeatureSelectionGA(DataSet=self.dataset,
                                          n_features=self.n_features)
         if usecols:
             ga_selecter.set_usecols(usecols)
@@ -89,7 +89,7 @@ class FeatureScreeningGA():
                 f.write("\n")
 
             f.write("GA finished \n")
-            
+
             key_min = min([int(key) for key in keys])
             min_features = list(ga_selecter.selected_features[key_min].columns)
         return copy.deepcopy(min_features)

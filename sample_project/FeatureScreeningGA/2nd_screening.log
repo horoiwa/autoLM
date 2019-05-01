@@ -1,0 +1,7 @@
+------------------------------------
+RM B,PTRATIO B,USA_Houston Japan_Kyoto,LSTAT,PTRATIO LSTAT,RM LSTAT,PTRATIO^2,RM^2
+------------------------------------
+RM LSTAT,RM B,LSTAT,PTRATIO^2,RM^2
+RM LSTAT,RM B,PTRATIO B,LSTAT,RM^2
+RM LSTAT,USA_Houston Japan_Kyoto,PTRATIO^2,PTRATIO LSTAT,RM^2
+RM LSTAT,RM B,PTRATIO B,USA_Houston Japan_Kyoto,RM^2

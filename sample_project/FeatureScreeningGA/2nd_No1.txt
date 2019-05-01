@@ -1,0 +1,34 @@
+GA_2nd_No1
+Run Feature selection By GA 
+
+
+N_features: 5 
+Score 0.7508739724451132
+
+[RM LSTAT,RM B,PTRATIO B,LSTAT,RM^2]
+
+
+N_features: 6 
+Score 0.7475382005467346
+
+[RM LSTAT,USA_Houston Japan_Kyoto,LSTAT,DIS LSTAT,PTRATIO^2,RM^2]
+
+
+N_features: 7 
+Score 0.7491424705835922
+
+[RM LSTAT,USA_Houston Japan_Kyoto,LSTAT,DIS LSTAT,PTRATIO^2,PTRATIO LSTAT,RM^2]
+
+
+N_features: 8 
+Score 0.7433247178011474
+
+[RM LSTAT,RM B,PTRATIO B,USA_Dallas Japan_Tokyo,TAX USA_Austin,PTRATIO^2,PTRATIO LSTAT,RM^2]
+
+
+N_features: 9 
+Score 0.7496158343483572
+
+[RM LSTAT,INDUS USA_Austin,PTRATIO B,USA_Dallas Japan_Tokyo,USA_Houston Japan_Kyoto,TAX USA_Austin,PTRATIO^2,PTRATIO LSTAT,RM^2]
+
+GA finished 

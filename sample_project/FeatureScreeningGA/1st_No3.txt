@@ -1,0 +1,10 @@
+GA_1st_No3
+Run Feature selection By GA 
+
+
+N_features: 5 
+Score 0.7383630073780885
+
+[LSTAT,INDUS USA_Austin,RM^2,RM LSTAT,LSTAT Japan_Kyoto]
+
+GA finished 

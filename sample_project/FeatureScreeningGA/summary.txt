@@ -1,0 +1,8 @@
+RM LSTAT,4,
+RM B,3,
+LSTAT,2,
+PTRATIO^2,2,
+RM^2,4,
+PTRATIO B,2,
+USA_Houston Japan_Kyoto,2,
+PTRATIO LSTAT,1,

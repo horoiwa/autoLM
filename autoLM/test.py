@@ -14,7 +14,7 @@ from autoLM.feature_screening import FeatureScreeningGA
 def test1():
     """GAtest
     """
-    project_name = "sample project"
+    project_name = "sample_project"
     if os.path.exists(project_name):
         shutil.rmtree(project_name)
 
@@ -71,6 +71,7 @@ def test2(dataset):
     """
         test for feature screening
     """
+    dataset = dataset
     screening = FeatureScreeningGA(dataset, n_features=(5, 10),
                                    n_gen=3, n_eval=10)
     screening.run(prescreening=4, postscreening=4, n_jobs=4)
@@ -92,6 +93,6 @@ def test3(dataset):
 
 
 if __name__ == '__main__':
-    test1()
-    test3()
-    test2()
+    dataset = test1()
+    test3(dataset)
+    test2(dataset)
