@@ -13,8 +13,8 @@ class DataSet():
     def __init__(self, project_name, criterio=15, poly=1,
                  stsc=True, cutoff=2000):
         self.project_name = project_name
-        self._create_project_dir()        
-        
+        self._create_project_dir()
+
         self.X = None
         self.y = None
         self.models = {}
@@ -32,6 +32,9 @@ class DataSet():
         self.poly = poly
         self.stsc = stsc
         self.promising_columns = None
+        self.usecols = None
+
+        # 特徴量の数のcutoff。これ以上多い場合は相関係数で足切り
         self.cutoff = cutoff
 
         # final counter
@@ -40,11 +43,22 @@ class DataSet():
     def __repr__(self):
         return "DataSet Object"
 
+    def set_usecols(self, usecols):
+        assert self.fit_count == 1
+        assert isinstance(usecols, list)
+        assert usecols is not None
+
+        for col in usecols:
+            assert col in list(self.X_sc.columns)
+
+        self.usecols = usecols
+        self.X_sc = self.X_sc[self.usecols]
+
     def input_check(self):
-        assert isinstance(self.X, 
+        assert isinstance(self.X,
                           (pd.DataFrame, pd.Series)
                           ), "input must be DataFrame or Series"
-        assert isinstance(self.y, 
+        assert isinstance(self.y,
                           (pd.DataFrame, pd.Series)
                           ), "input must be DataFrame or Series"
 
@@ -83,11 +97,14 @@ class DataSet():
         if self.promising_columns:
             X_sc = X_sc[self.promising_columns]
 
+        if self.usecols is not None:
+            X_sc = X_sc[self.usecols]
+
         return X_sc
 
     def fit(self, X, y):
         assert self.fit_count == 0, "Fit can use only once"
-        
+
         self.X = X
         self.y = y
         self.input_check()
@@ -124,11 +141,11 @@ class DataSet():
     def _postprocess(self):
         if self.poly > 1:
             self.X_poly, self.models["poly"] = poly_generation(self.X_pre,
-                                                               n=self.poly, 
+                                                               n=self.poly,
                                                                model=None)
         else:
             self.X_poly = self.X_pre
-        
+
         if self.stsc:
             self.X_sc, self.models['stsc'] = standard_scaler(self.X_poly)
         else:
@@ -140,7 +157,7 @@ class DataSet():
 
     def _create_project_dir(self):
         def rename_project(name, n):
-            new_name = name + "_({})".format(n)  
+            new_name = name + "_({})".format(n)
             if os.path.exists(new_name):
                 new_name = rename_project(name, n+1)
             return new_name
@@ -149,7 +166,7 @@ class DataSet():
             self.project_name = rename_project(self.project_name, 1)
             print("Warning: project_name is dupilicated and renamed to {}".format(self.project_name))
         os.makedirs(self.project_name)
-        
+
 
 if __name__ == '__main__':
     print("hello")
