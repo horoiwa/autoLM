@@ -1,4 +1,4 @@
-## autoLM (Auto Linear regression Modeling)
+## autoLM (Automated Linear regression Modeling)
 
 `pip install deap joblib`
 
@@ -7,9 +7,7 @@
 
 #### 自動化された線形回帰モデリング
 
-- onehot化などの前処理の自動化
-
-- パイプライン化された多項式化や標準化操作
+- 自動化され、パイプライン化されたonehotエンコーディング、多項式化と標準化操作
 
 - 並列化された遺伝的アルゴリズムによる特徴量選択
 
@@ -90,8 +88,10 @@ fitメソッドによって作成された前処理パイプラインに従っ�
 ```
 from autoLM.feature_screening import FeatureScreeningGA
 
+# テスト用設定
+# 推奨はn_gen>30　かつ n_eval >250
 screening = FeatureScreeningGA(dataset, n_features=(5, 20),
-                               n_gen=50, n_eval=250)
+                               n_gen=5, n_eval=10)
 
 screening.run(prescreening=30, postscreening=10, n_jobs=1)
 
