@@ -66,6 +66,8 @@ class FeatureScreeningGA():
                                          n_features=self.n_features)
         if usecols:
             ga_selecter.set_usecols(usecols)
+            if len(usecols) <= ga_selecter.max_features:
+                ga_selecter.max_features = len(usecols)
 
         ga_selecter.run_RidgeGA(n_gen=self.n_gen, n_eval=self.n_eval)
 
