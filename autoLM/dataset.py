@@ -81,8 +81,11 @@ class DataSet():
         X_ord = X[self.fmap["ordinal"]]
         X_cat = X[self.fmap["category"]]
 
-        X_onehot = onehot_conversion(X_cat, model=self.models["onehot"])
-        X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
+        if X_cat.shape[1] > 1:
+            X_onehot = onehot_conversion(X_cat, model=self.models["onehot"])
+            X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
+        else:
+            X_pre = pd.concat([X_num, X_ord], 1)
 
         if self.poly > 1:
             X_poly = poly_generation(X_pre, model=self.models["poly"])
@@ -133,8 +136,11 @@ class DataSet():
         X_ord = self.X[self.fmap["ordinal"]]
         X_cat = self.X[self.fmap["category"]]
 
-        X_onehot, self.models["onehot"], self.cmap = onehot_conversion(X_cat)
-        self.X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
+        if X_cat.shape[1] > 0:
+            X_onehot, self.models["onehot"], self.cmap = onehot_conversion(X_cat)
+            self.X_pre = pd.concat([X_num, X_ord, X_onehot], 1)
+        else:
+            self.X_pre = pd.concat([X_num, X_ord], 1)
 
     def _postprocess(self):
         if self.poly > 1:
