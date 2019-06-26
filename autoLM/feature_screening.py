@@ -61,7 +61,7 @@ class FeatureScreeningGA():
         unique = list(set(features))
         return unique
 
-    def _ga_selection(self, name, usecols=None):
+    def _ga_selection(self, name, usecols=None, mode='max'):
         ga_selecter = FeatureSelectionGA(DataSet=self.dataset,
                                          n_features=self.n_features)
         if usecols:
@@ -93,8 +93,15 @@ class FeatureScreeningGA():
             f.write("GA finished \n")
 
             key_min = min([int(key) for key in keys])
+            key_max = max([int(key) for key in keys])
+
             min_features = list(ga_selecter.selected_features[key_min].columns)
-        return copy.deepcopy(min_features)
+            max_features = list(ga_selecter.selected_features[key_max].columns)
+        
+        if mode == 'min':
+            return copy.deepcopy(min_features)
+        else:
+            return copy.deepcopy(max_features)
 
 
 if __name__ == '__main__':
